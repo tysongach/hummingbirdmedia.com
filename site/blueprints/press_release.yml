@@ -1,0 +1,35 @@
+title: Press Release
+pages: false
+files:
+  size: 5242880
+  width: 3000
+  height: 3000
+options:
+  preview: true
+  status: true
+  template: false
+  url: true
+  delete: true
+fields:
+  title:
+    label: Title
+    type: text
+  subtitle:
+    label: Subtitle
+    type: text
+  date:
+    label: Date
+    type: date
+    format: mm/dd/yyyy
+    width: 1/2
+    default: today
+    required: true
+  location:
+    label: Location
+    type: text
+    width: 1/2
+    icon: map-marker
+  text:
+    label: Body
+    type: textarea
+    required: true

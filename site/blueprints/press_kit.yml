@@ -1,0 +1,27 @@
+title: Press Kit
+pages: false
+# files:
+#   size: 5242880
+#   width: 3000
+#   height: 3000
+# options:
+#   preview: true
+#   status: true
+#   template: false
+#   url: true
+#   delete: true
+fields:
+  title:
+    label: Title
+    type: text
+
+
+  items:
+    label: Items
+    type: structure
+    style: table
+    fields:
+      category:
+        label: Category
+        type: select
+        options: pages

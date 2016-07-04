@@ -1,0 +1,21 @@
+title: Team Member
+pages: false
+files: true
+options:
+  preview: true
+  status: true
+  template: false
+  url: true
+  delete: true
+fields:
+  title:
+    label: Full Name
+    type: text
+    required: true
+  job_title:
+    label: Title
+    type: text
+    placeholder: e.g. CEO
+  bio:
+    label: Bio
+    type: textarea

@@ -1,0 +1,11 @@
+label: Links
+type: structure
+style: table
+fields:
+  name:
+    label: Name
+    type: text
+    placeholder: e.g. Twitter
+  url:
+    label: URL
+    type: url

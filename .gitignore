@@ -1,5 +1,7 @@
 !.keep
 .DS_Store
-assets/webfonts/*
-site/panel/accounts/*
+.sass-cache
+assets/avatars/*
+config.hummingbirdmedia.com.php
+site/accounts/*
 thumbs/*

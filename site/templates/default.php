@@ -1,15 +1,6 @@
-<?php snippet('header') ?>
+<? snippet("header") ?>
 
-<section role="main">
-  <div class="wrap">
-    <h1><?php echo html($page->title()) ?></h1>
-    <?php echo kirbytext($page->text()) ?>
-  </div>  <!-- end wrap -->
-</section>  <!-- end  -->
+  <h1><?= $page->title()->html() ?></h1>
+  <?= $page->text()->kirbytext() ?>
 
-<?php snippet('footer') ?>
-
-<?php echo js('assets/js/scripts.min.js') ?>
-
-</body>
-</html>
+<? snippet("footer") ?>

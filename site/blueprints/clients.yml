@@ -1,0 +1,15 @@
+title: Clients
+pages:
+  template: client
+  num: zero
+files: false
+options:
+  preview: false
+  status: false
+  template: false
+  url: false
+  delete: false
+fields:
+  title:
+    label: Title
+    type: text
