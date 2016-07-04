@@ -1,0 +1,28 @@
+Humans TXT
+humanstxt.org
+
+
+/* People */
+
+Tyson Gach
+Design & Development
+Brooklyn, NY
+http://tysongach.com
+
+
+/* Technology */
+
+Kirby CMS
+http://getkirby.com
+
+Normalize.css
+http://necolas.github.com/normalize.css
+
+Sublime Text
+http://www.sublimetext.com
+
+CodeKit
+http://incident57.com/codekit
+
+ImageOptim
+http://imageoptim.com

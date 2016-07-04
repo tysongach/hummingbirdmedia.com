@@ -1,0 +1,167 @@
+# gzip compression
+
+<IfModule mod_deflate.c>
+
+  <IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+      SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ \
+      ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+      RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+  </IfModule>
+
+  <IfModule mod_filter.c>
+    FilterDeclare COMPRESS
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $text/css
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $text/html
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $text/javascript
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $text/plain
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $text/xml
+    FilterProvider COMPRESS DEFLATE resp=Content-Type $application/javascript
+    FilterChain COMPRESS
+    FilterProtocol COMPRESS DEFLATE change=yes;byteranges=no
+  </IfModule>
+
+  <IfModule !mod_filter.c>
+    AddOutputFilterByType DEFLATE text/css text/html text/plain text/xml
+    AddOutputFilterByType DEFLATE text/javascript application/javascript
+  </IfModule>
+
+  <IfModule mod_setenvif.c>
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+  </IfModule>
+
+  <IfModule mod_headers.c>
+    Header append Vary User-Agent env=!dont-vary
+    Header append Vary Accept-Encoding
+  </IfModule>
+
+</IfModule>
+
+
+# expires headers
+
+<IfModule mod_expires.c>
+
+  ExpiresActive on
+
+  ExpiresDefault                          "access plus 1 month"
+
+  ExpiresByType text/cache-manifest       "access plus 0 seconds"
+
+  ExpiresByType text/html                 "access plus 0 seconds"
+
+  ExpiresByType application/json          "access plus 0 seconds"
+  ExpiresByType application/xml           "access plus 0 seconds"
+  ExpiresByType text/xml                  "access plus 0 seconds"
+
+  ExpiresByType application/atom+xml      "access plus 1 hour"
+  ExpiresByType application/rss+xml       "access plus 1 hour"
+
+  ExpiresByType image/x-icon              "access plus 1 week"
+
+  ExpiresByType audio/ogg                 "access plus 1 month"
+  ExpiresByType image/gif                 "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 month"
+  ExpiresByType video/webm                "access plus 1 month"
+
+  ExpiresByType text/x-component          "access plus 1 month"
+
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+  ExpiresByType application/x-font-ttf    "access plus 1 month"
+  ExpiresByType application/x-font-woff   "access plus 1 month"
+  ExpiresByType font/opentype             "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType text/css                  "access plus 1 year"
+
+</IfModule>
+
+
+# redirects
+
+<IfModule mod_rewrite.c>
+
+  RewriteEngine on
+
+  # remove www
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+
+  RewriteBase /
+
+  # filename-based cache busting
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpg|gif)$ $1.$3 [L]
+
+  # block text files in the content folder from being accessed directly
+  RewriteRule ^content/(.*)\.(txt|md|mdown)$ error [R=301,L]
+
+  # block all files in the site folder from being accessed directly
+  RewriteRule ^site/(.*) error [R=301,L]
+
+  # block all files in the kirby folder from being accessed directly
+  RewriteRule ^kirby/(.*) error [R=301,L]
+
+  # make panel links work
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^panel/(.*) panel/index.php [L]
+
+  # make site links work
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*) index.php [L]
+
+</IfModule>
+
+
+# client order updating
+
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-antelope-audio/(.*) /content/02-clients/00-antelope-audio/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-the-aviators/(.*) /content/02-clients/00-aviators/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-carousel-industries/(.*) /content/02-clients/00-carousel-industries/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-geerfab/(.*) /content/02-clients/00-geerfab/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-k-array/(.*) /content/02-clients/00-k-array/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-moogfest/(.*) /content/02-clients/00-moogfest/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-moog-music/(.*) /content/02-clients/00-moog-music/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-neumann/(.*) /content/02-clients/00-neumann/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-reel2real-hollywood-short-film-festival/(.*) /content/02-clients/00-reel2real-hollywood-short-film-festival/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-sennheiser/(.*) /content/02-clients/00-sennheiser/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-soundcast-systems/(.*) /content/02-clients/00-soundcast-systems/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-thinklogical/(.*) /content/02-clients/00-thinklogical/$2
+RedirectMatch 301 /content/02-clients/(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15)-true-systems/(.*) /content/02-clients/00-true-systems/$2
+RedirectMatch 301 /clients/the-aviators/(.*) /clients/aviators/$1
+
+Redirect 301 /dynamic.asp?id=sennheiserpage /clients/sennheiser
+Redirect 301 /clients/the-aviators /clients/aviators
+Redirect 301 /clients/rough-linen/press-releases/press-releases /clients/rough-linen
+Redirect 301 /data/edithtml/Images/biography.doc /
+Redirect 301 /data/edithtml/Images/120104p-nammperformersbio-rs.doc /
+Redirect 301 /data/edithtml/Images/pimf%20wed%20news%20releasefinal.doc /
+Redirect 301 /content/02-clients/the-aviators/01-press-releases/10-the-music-guy-in-the-sky-joe-ellis-joins-the-cast-of-the-aviators-and-discusses-his-aspirations-against-gravity/joeellisq-areleasefinal.doc /clients/aviators
+Redirect 301 /content/02-clients/09-sennheiser/01-press-releases/20-sennheiser-looks-to-drive-growth-in-key-market-segments-announcing-executive-appointments-in-its-consumer-and-telecommunications-channels/121129p-kranepoolwheartyf.doc /clients/sennheiser
+Redirect 301 /content/02-clients/00-sennheiser/01-press-releases/30-sennheiser-mkh-8060-shine-on-the-set-of-abc-s-modern-family/130114-sn-modernfamilyfinal.doc /clients/sennheiser
+Redirect 301 /clients/neumann/images/neumann-capsules /clients/neumann
+Redirect 301 /content/02-clients/09-sennheiser/01-press-releases/99-sennheiser-s-digital-9000-wireless-system-hdvd-800-and-neumann-kh-310-monitor-nominated-for-29th-annual-tec-awards/131015-sn-tecnom-1.doc /clients/sennheiser
+Redirect 301 /content/02-clients/09-sennheiser/01-press-releases/93-young-drumming-prodigy-owen-bonaventura-makes-his-sound-count-measure-for-measure-with-sennheiser-and-neumann/130923-owenbonaventurarev.doc /clients/sennheiser
+Redirect 301 /content/02-clients/00-sennheiser/01-press-releases/65-sennheiser-provides-unwavering-support-and-flawless-wireless-as-cma-music-festival-shatters-attendance-records/cma.doc /clients/sennheiser
+Redirect 301 /content/02-clients/06-jenne/01-press-releases/03-jenne-inc-and-panasonic-assist-integrator-dlm-communications-in-providing-business-telephone-systems-to-cincinnati-area-smbs/130219-jn-dlmcommunications-final.doc /
+Redirect 301 /clients/the-aviators/press-releases/the-aviators-rockets-into-season-4-with-terrain-hopping-adventures-in-every-corner-of-the-continent /clients/aviators
+Redirect 301 /a /
+Redirect 301 /clients/neumann/images /clients/neumann
+Redirect 301 /clients/philadelphia-international-music-festival/videos /
+Redirect 301 /content/02-clients/00-antelope-audio/01-press-releases/the-hills-come-alive-with-antelope-audio-and-the-earth-harp/131106-williamcloseproaudioversion_gl.doc /content/02-clients/00-antelope-audio/01-press-releases/17-the-hills-come-alive-with-the-earth-harp-and-antelope-audio/131106-williamclose_editgl_last.doc
+Redirect 301 /content/02-clients/00-moogfest/01-press-releases/01-moogfest-and-moog-music-announce-4th-circuit-bending-challenge/circuit_bending_pr_final_graphic_final_verbiage2.doc /content/02-clients/00-moogfest/01-press-releases/02-moogfest-and-moog-music-announce-4th-circuit-bending-challenge/circuit_bending_pr_final_graphic_final_verbiage2.doc
+Redirect 301 /clients/antelope-audio/press-releases/the-hills-come-alive-with-antelope-audio-and-the-earth-harp /clients/antelope-audio/press-releases/the-hills-come-alive-with-the-earth-harp-and-antelope-audio
+Redirect 301 /clients/neumann/press-releases/mick-wingert-voice-of-awesomeness-relies-on-neumann-u-87-and-sennheiser-mkh-416-to-capture-nuances-of-animation-performances /clients/neumann/press-releases/mick-wingert-voice-of-awesomeness-relies-on-neumann-u-87-and-sennheiser-mkh-4to-capture-nuances-of-animation-performances
+Redirect 301 /content/02-clients/00-sennheiser/01-press-releases/eklips-has-momentum-reshaping-the-art-of-beatboxing/140604peklipsf.doc /content/02-clients/00-sennheiser/01-press-releases/174-eklips-has-momentum-reshaping-the-art-of-beatboxing/140604peklipsf.doc

@@ -1,0 +1,5 @@
+!.keep
+.DS_Store
+assets/webfonts/*
+site/panel/accounts/*
+thumbs/*
