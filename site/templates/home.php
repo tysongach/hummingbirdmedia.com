@@ -1,33 +1,33 @@
-<? snippet("header") ?>
+<?php snippet("header") ?>
 
   <section>
-    <h2><?= $site->tagline() ?></h2>
+    <h2><?php echo $site->tagline() ?></h2>
   </section>
 
   <section>
     <h2>Clients</h2>
     <ol>
-      <? foreach($clients as $client): ?>
+      <?php foreach($clients as $client): ?>
       <li>
-        <a href="<?= $client->url() ?>">
-          <?= $client->title() ?>
+        <a href="<?php echo $client->url() ?>">
+          <?php echo $client->title() ?>
         </a>
       </li>
-      <? endforeach ?>
+      <?php endforeach ?>
     </ol>
   </section>
 
   <section>
     <h2>Team</h2>
     <ol>
-      <? foreach($team_members as $team_member): ?>
+      <?php foreach($team_members as $team_member): ?>
       <li>
-        <a href="<?= $team_member->url() ?>">
-          <?= $team_member->title() ?>
+        <a href="<?php echo $team_member->url() ?>">
+          <?php echo $team_member->title() ?>
         </a>
       </li>
-      <? endforeach ?>
+      <?php endforeach ?>
     </ol>
   </section>
 
-<? snippet("footer") ?>
+<?php snippet("footer") ?>
