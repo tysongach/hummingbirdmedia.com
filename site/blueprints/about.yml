@@ -1,0 +1,31 @@
+title: About
+pages: false
+files: false
+options:
+  preview: false
+  template: false
+  url: false
+  delete: false
+fields:
+  title:
+    label: Title
+    type: text
+  story:
+    label: Story
+    type: textarea
+  services:
+    label: Services
+    type: structure
+    style: table
+    entry: >
+      {{service}}
+    fields:
+      service:
+        label: Service
+        type: text
+  email:
+    label: Email Address
+    type: email
+    help: This is the primary contact email address
+    required: true
+  links: links

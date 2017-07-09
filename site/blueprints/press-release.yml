@@ -27,9 +27,17 @@ fields:
   location:
     label: Location
     type: text
-    width: 1/2
+    placeholder: e.g. New York City
     icon: map-marker
+    width: 1/2
   text:
     label: Body
     type: textarea
     required: true
+  featured_image:
+    label: Featured Image
+    type: image
+  download:
+    label: Document Download
+    type: select
+    options: documents

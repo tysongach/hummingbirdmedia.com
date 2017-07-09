@@ -1,29 +1,29 @@
-<?php snippet("header") ?>
+<? snippet("header") ?>
 
-<h1><?php echo $page->title()->html() ?></h1>
-<?php echo $page->description()->kirbytext() ?>
+<h1><?= $page->title()->html() ?></h1>
+<?= $page->description()->kirbytext() ?>
 
 <ul>
-  <?php foreach($links as $link): ?>
+  <? foreach($links as $link): ?>
     <li>
-      <a href="<?php echo $link->url() ?>">
-        <?php echo $link->name() ?>
+      <a href="<?= $link->url() ?>">
+        <?= $link->name() ?>
       </a>
     </li>
-  <?php endforeach ?>
+  <? endforeach ?>
 </ul>
 
 <section>
   <h2>Press Releases</h2>
 
-  <?php foreach($press_releases as $release): ?>
-    <a href="<?php echo $release->url() ?>">
-      <h3><?php echo $release->title() ?></h3>
-      <time datetime="<?php echo $release->date("Y-m-d") ?>">
-        <?php echo $release->date("F j, Y") ?>
+  <? foreach($press_releases as $release): ?>
+    <a href="<?= $release->url() ?>">
+      <h3><?= $release->title() ?></h3>
+      <time datetime="<?= $release->date("Y-m-d") ?>">
+        <?= $release->date("F j, Y") ?>
       </time>
     </a>
-  <?php endforeach ?>
+  <? endforeach ?>
 </section>
 
-<?php snippet("footer") ?>
+<? snippet("footer") ?>

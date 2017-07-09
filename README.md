@@ -1,12 +1,21 @@
 # hummingbirdmedia.com
 
-## Running the site locally
+## Setup
 
-1. From the command line, navigate to the project directory and start a local
-PHP server:
+1. Get the code:
 
-  ```bash
-  php -S localhost:8000
-  ```
+    ```bash
+    git clone https://github.com/tysongach/hummingbirdmedia.com.git
+    ```
 
-1. You can now view your [website](http://localhost:8000).
+1. `cd` into the project directory and install the dependencies:
+
+    ```bash
+    npm install
+    ```
+
+1. Run gulp:
+
+    ```bash
+    gulp
+    ```

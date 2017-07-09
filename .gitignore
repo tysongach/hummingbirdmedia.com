@@ -1,7 +1,8 @@
-!.keep
 .DS_Store
 .sass-cache
-assets/avatars/*
+/assets/avatars
+/assets/stylesheets/*.css
+/node_modules
+/site/accounts
+/thumbs/*
 config.hummingbirdmedia.com.php
-site/accounts/*
-thumbs/*

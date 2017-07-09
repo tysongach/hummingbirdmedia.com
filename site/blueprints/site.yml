@@ -4,7 +4,3 @@ fields:
   title:
     label: Title
     type: text
-  tagline:
-    label: Tagline
-    type: text
-  links: links

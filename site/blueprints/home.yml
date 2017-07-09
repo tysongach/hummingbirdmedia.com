@@ -11,3 +11,18 @@ fields:
   title:
     label: Title
     type: text
+  tagline:
+    label: Tagline
+    type: text
+  attributes:
+    label: Attributes
+    type: structure
+    entry: >
+      {{attribute_title}}
+    fields:
+      attribute_title:
+        label: Title
+        type: text
+      attribute_description:
+        label: Description
+        type: textarea

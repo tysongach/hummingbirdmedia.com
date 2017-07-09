@@ -1,0 +1,48 @@
+// Typography
+$font-family-default: "proxima-nova-alt", $font-stack-system;
+$font-family-heading: $font-family-default;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+
+$line-height-body: 1.6;
+$line-height-heading: 1.2;
+
+// Spacing
+$space-xx-small: 0.25rem;
+$space-x-small: 0.5rem;
+$space-small: 0.75rem;
+$space-medium: 1rem;
+$space-large: 1.5rem;
+$space-x-large: 3rem;
+$space-xx-large: 6rem;
+
+// Colors
+$black: #000;
+$dark-gray: #222;
+$medium-gray: #999;
+$light-gray: #ddd;
+$white: #fff;
+
+$blue: #1565c0;
+
+$color-text-default: $dark-gray;
+$color-text-heading: $color-text-default;
+$color-text-link: $color-text-default;
+$color-text-link-hover: $blue;
+
+// Borders
+$color-border-default: $light-gray;
+$border-default: 1px solid $color-border-default;
+$border-radius-default: 3px;
+
+// Focus
+$focus-outline-color: transparentize($blue, 0.4);
+$focus-outline-width: 3px;
+$focus-outline: $focus-outline-width solid $focus-outline-color;
+$focus-outline-offset: 2px;
+
+// Animations
+$animation-duration-default: 150ms;
+$animation-timing-default: ease;

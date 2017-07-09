@@ -16,7 +16,7 @@ function snippet($file, $data = array(), $return = false) {
  * Builds a css link tag for relative or absolute urls
  *
  * @param string $url
- * @param string $media
+ * @param string|array $media Either a media string or an array of attributes
  * @return string
  */
 function css() {
@@ -27,10 +27,10 @@ function css() {
  * Builds a script tag for relative or absolute links
  *
  * @param string $src
- * @param boolean $async
+ * @param boolean|array $async Either true for the async attribute or an array of attributes
  * @return string
  */
-function js($src, $async = false) {
+function js() {
   return call([kirby::instance()->component('js'), 'tag'], func_get_args());
 }
 
@@ -51,17 +51,17 @@ function markdown($text) {
  * @return string
  */
 function smartypants($text) {
-  return kirby::instance()->component('smartypants')->parse($text);
+  return kirby::instance()->component('smartypants')->parse($text, true);
 }
 
 /**
  * Converts a string to Kirbytext
  *
- * @param Field $field
+ * @param Field/string $field
  * @return string
  */
-function kirbytext($field) {
-  return (string)new Kirbytext($field);
+function kirbytext($field, $page = null) {
+  return (string)new Kirbytext($field, $page);
 }
 
 /**

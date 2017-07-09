@@ -16,6 +16,9 @@ class StructureField extends BaseField {
   public $structure = null;
   public $style     = 'items';
   public $modalsize = 'medium';
+  public $limit     = null;
+  public $sort      = null;
+  public $flip      = false;
 
   public function routes() {
 
@@ -53,6 +56,18 @@ class StructureField extends BaseField {
     return in_array($this->style, $styles) ? $this->style : 'items';
   }
 
+  public function sort() {
+    return $this->sort ? str::split($this->sort) : false;
+  }
+
+  public function flip() {
+    return $this->flip === true ? true : false;
+  }
+
+  public function sortable() {
+    return !$this->readonly() && !$this->sort() && !$this->flip();
+  }
+
   public function structure() {
     if(!is_null($this->structure)) {
       return $this->structure;
@@ -76,7 +91,16 @@ class StructureField extends BaseField {
   }
 
   public function entries() {
-    return $this->structure()->data();
+    $entries = $this->structure()->data();
+
+    if($sort = $this->sort()) {
+      $entries = call([$entries, 'sortBy'], $sort);
+    }
+    if($this->flip()) {
+      $entries = $entries->flip();
+    }
+
+    return $entries;
   }
 
   public function result() {  
@@ -126,7 +150,11 @@ class StructureField extends BaseField {
 
   public function headline() {
 
-    if(!$this->readonly) {
+    // get entries
+    $entries = $this->entries();
+
+    // check if limit is either null or the number of entries less than limit 
+    if(!$this->readonly && (is_null($this->limit) || (is_int($this->limit) && $entries->count() < $this->limit))) {
 
       $add = new Brick('a');
       $add->html('<i class="icon icon-left fa fa-plus-circle"></i>' . l('fields.structure.add'));

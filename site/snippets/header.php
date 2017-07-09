@@ -5,14 +5,13 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description"
-          content="<?php echo $site->description()->html() ?>">
-    <title><?php echo $site->title()->html() ?></title>
-    <?php echo css("assets/stylesheets/main.css") ?>
+          content="<?= $site->description()->html() ?>">
+    <title><?= $site->title()->html() ?></title>
+    <?= css("assets/stylesheets/main.css") ?>
+    <script src="https://use.typekit.net/wxw8fiq.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
-    <header>
-      <a href="<?php echo $site->url() ?>">
-        <?php echo $site->title() ?>
-      </a>
-    </header>
+    <? snippet("site-nav") ?>
     <main role="main">
+      <div class="container">
