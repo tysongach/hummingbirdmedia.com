@@ -1,6 +1,7 @@
 title: Team Member
 pages: false
-files: true
+files:
+  max: 1
 options:
   preview: true
   status: true

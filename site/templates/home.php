@@ -4,9 +4,9 @@
   <h2><?= $page->tagline() ?></h2>
 
   <dl>
-    <? foreach($page->attributes()->toStructure() as $attribute): ?>
-      <dt><?= kirbytext($attribute->attribute_title()) ?></dt>
-      <dd><?= kirbytext($attribute->attribute_description()) ?></dd>
+    <? foreach($attributes as $attribute): ?>
+      <dt><?= $attribute->attribute_title()->kirbytext() ?></dt>
+      <dd><?= $attribute->attribute_description()->kirbytext() ?></dd>
     <? endforeach ?>
   </dl>
 </section>
@@ -14,48 +14,15 @@
 <section id="recent-press">
   <h2>Recent Press</h2>
 
-  <?
-    $result   = array();
-    foreach($pages->index() as $p) {
-      if($p->template() == "press-release") $result[$p->uri()] = $p;
-    }
-    $result = new pages($result);
-  ?>
-
-  <? foreach($result->visible()->sortBy("date", "desc")->limit(5) as $release): ?>
-    <article>
-      <? if($release->hasImages()): ?>
-        <? if($release->featured_image()->isNotEmpty()): ?>
-          <img src="<?= $release->images()->find($release->featured_image())->crop(600, 400)->url() ?>" alt="">
-        <? else: ?>
-          <img src="<?= $release->images()->first()->crop(600, 400)->url() ?>" alt="">
-        <? endif ?>
-      <? else: ?>
-        <? if($release->parent()->parent()->images()->find($release->parent()->parent()->logo())): ?>
-          <img src="<?= $release->parent()->parent()->images()->find($release->parent()->parent()->logo())->crop(600, 400)->url() ?>" alt="">
-        <? endif ?>
-      <? endif ?>
-
-      <a href="<?= $release->url() ?>">
-        <h2>
-          <?= $release->title()->widont() ?>
-        </h2>
-      </a>
-
-      <time datetime="<?= $release->date("Y-m-d") ?>">
-        <?= $release->date("F j, Y") ?>
-      </time>
-
-      <span>
-        <?= $release->parent()->parent()->title() ?>
-      </span>
-
-      <p>
-        <?= $release->text()->excerpt(300) ?>
-      </p>
-    </article>
+  <? foreach($latest_press as $release): ?>
+    <? snippet(
+      "release-preview",
+      array(
+        "release" => $release,
+        "show_client" => true
+      )
+    ) ?>
   <? endforeach ?>
-
 </section>
 
 <section id="clients">
@@ -73,12 +40,12 @@
 
 <section id="about-us">
   <h2>About Us</h2>
-  <?= kirbytext($pages->find("about")->story()) ?>
+  <?= $pages->find("about")->story()->kirbytext() ?>
 
   <h3>Services</h3>
   <ul>
-    <? foreach($pages->find("about")->services()->toStructure() as $service): ?>
-      <li><?= kirbytext($service->service()) ?></li>
+    <? foreach($services as $service): ?>
+      <li><?= $service->service()->kirbytext() ?></li>
     <? endforeach ?>
   </ul>
 </section>
@@ -86,9 +53,9 @@
 <section id="contact">
   <h2>Contact</h2>
 
-  <a href="mailto:<?= $pages->find("about")->email() ?>">Email Us</a>
+  <a href="mailto:<?= $email_address ?>">Email Us</a>
 
-  <? foreach($pages->find("about")->links()->toStructure() as $link): ?>
+  <? foreach($social_links as $link): ?>
     <a href="<?= $link->url() ?>">
       <?= $link->name() ?>
     </a>
